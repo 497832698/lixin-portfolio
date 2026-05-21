@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>李鑫 · 作品集</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Linear inspired dark mode */
+      --linear-primary: #5e6ad2;
+      --linear-primary-hover: #828fff;
+      --linear-ink: #f7f8f8;
+      --linear-ink-muted: #d0d6e0;
+      --linear-ink-subtle: #8a8f98;
+      --linear-canvas: #010102;
+      --linear-surface-1: #0f1011;
+      --linear-surface-2: #141516;
+      --linear-hairline: #23252a;
+
+      /* Figma inspired color blocks */
+      --figma-lime: #dceeb1;
+      --figma-lilac: #c5b0f4;
+      --figma-cream: #f4ecd6;
+      --figma-pink: #efd4d4;
+      --figma-mint: #c8e6cd;
+      --figma-navy: #1f1d3d;
+
+      /* Spacing */
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+      --space-2xl: 48px;
+      --space-section: 96px;
+
+      /* Border radius */
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-xl: 16px;
+      --radius-pill: 9999px;
+
+      /* Typography */
+      --font-display: 'Inter', -apple-system, system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-display);
+      background: var(--linear-canvas);
+      color: var(--linear-ink);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    /* Navigation */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-xl);
+      background: rgba(1, 1, 2, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--linear-hairline);
+      z-index: 100;
+    }
+
+    .nav-logo {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--linear-ink);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: var(--space-xl);
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--linear-ink-subtle);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--linear-ink);
+    }
+
+    .btn {
+      padding: 10px 18px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--linear-primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--linear-primary-hover);
+      transform: translateY(-2px);
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--space-section) var(--space-xl);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(94, 106, 210, 0.15), transparent),
+        radial-gradient(ellipse 60% 40% at 80% 50%, rgba(197, 176, 244, 0.08), transparent);
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      color: var(--linear-primary);
+      margin-bottom: var(--space-lg);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 24px;
+      height: 2px;
+      background: var(--linear-primary);
+    }
+
+    .hero-title {
+      font-size: clamp(48px, 10vw, 80px);
+      font-weight: 600;
+      line-height: 1.05;
+      letter-spacing: -3px;
+      margin-bottom: var(--space-lg);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s ease 0.1s forwards;
+    }
+
+    .hero-subtitle {
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--linear-ink-muted);
+      max-width: 600px;
+      line-height: 1.6;
+      margin-bottom: var(--space-2xl);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s ease 0.2s forwards;
+    }
+
+    .hero-tags {
+      display: flex;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-xl);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s ease 0.3s forwards;
+    }
+
+    .hero-tag {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--linear-ink);
+      background: var(--linear-surface-1);
+      padding: 8px 16px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--linear-hairline);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: var(--space-2xl);
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-sm);
+      color: var(--linear-ink-subtle);
+      font-size: 12px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .hero-scroll-line {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, var(--linear-primary), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Marquee */
+    .marquee {
+      background: var(--linear-surface-1);
+      padding: var(--space-lg) 0;
+      overflow: hidden;
+      border-top: 1px solid var(--linear-hairline);
+      border-bottom: 1px solid var(--linear-hairline);
+    }
+
+    .marquee-content {
+      display: flex;
+      gap: var(--space-2xl);
+      animation: marquee 30s linear infinite;
+    }
+
+    .marquee-item {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--linear-ink-subtle);
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .marquee-item::after {
+      content: '•';
+      color: var(--linear-primary);
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Sections */
+    .section {
+      padding: var(--space-section) var(--space-xl);
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto var(--space-2xl);
+    }
+
+    .section-label {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      color: var(--linear-primary);
+      margin-bottom: var(--space-md);
+    }
+
+    .section-title {
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 600;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: var(--space-md);
+    }
+
+    .section-desc {
+      font-size: 18px;
+      color: var(--linear-ink-muted);
+      line-height: 1.6;
+    }
+
+    /* Experience Cards */
+    .experience-list {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+
+    .experience-card {
+      background: var(--linear-surface-1);
+      border: 1px solid var(--linear-hairline);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .experience-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--linear-primary);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .experience-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--linear-surface-2);
+    }
+
+    .experience-card:hover::before {
+      opacity: 1;
+    }
+
+    .experience-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--space-sm);
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    .experience-company {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: -0.4px;
+    }
+
+    .experience-date {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--linear-primary);
+      background: var(--linear-surface-2);
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+    }
+
+    .experience-role {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--linear-ink-muted);
+      margin-bottom: var(--space-md);
+    }
+
+    .experience-desc {
+      font-size: 16px;
+      color: var(--linear-ink-subtle);
+      line-height: 1.6;
+    }
+
+    /* Color Block Section */
+    .color-block-section {
+      padding: var(--space-section) var(--space-xl);
+    }
+
+    .color-block {
+      border-radius: var(--radius-lg);
+      padding: var(--space-2xl);
+      position: relative;
+      overflow: hidden;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .color-block-lime {
+      background: var(--figma-lime);
+      color: #1a1a1a;
+    }
+
+    .color-block-lilac {
+      background: var(--figma-lilac);
+      color: #1a1a1a;
+    }
+
+    .color-block h2 {
+      font-size: clamp(28px, 5vw, 40px);
+      font-weight: 600;
+      letter-spacing: -1px;
+      line-height: 1.2;
+      margin-bottom: var(--space-md);
+    }
+
+    .color-block p {
+      font-size: 18px;
+      line-height: 1.6;
+      opacity: 0.8;
+    }
+
+    /* Project Cards */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: var(--space-lg);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .project-card {
+      background: var(--linear-surface-1);
+      border: 1px solid var(--linear-hairline);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .project-image {
+      aspect-ratio: 16/10;
+      background: linear-gradient(135deg, var(--linear-surface-1), var(--linear-surface-2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-image::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg,
+        rgba(94, 106, 210, 0.1) 0%,
+        rgba(197, 176, 244, 0.1) 100%);
+    }
+
+    .project-image-icon {
+      width: 64px;
+      height: 64px;
+      background: var(--linear-surface-2);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--linear-primary);
+      font-size: 28px;
+    }
+
+    .project-content {
+      padding: var(--space-xl);
+    }
+
+    .project-category {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--linear-primary);
+      margin-bottom: var(--space-sm);
+    }
+
+    .project-title {
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.4px;
+      margin-bottom: var(--space-sm);
+    }
+
+    .project-desc {
+      font-size: 16px;
+      color: var(--linear-ink-subtle);
+      line-height: 1.6;
+      margin-bottom: var(--space-lg);
+    }
+
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    .project-tech span {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--linear-ink-muted);
+      background: var(--linear-surface-2);
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+    }
+
+    /* Contact Section */
+    .contact-section {
+      padding: var(--space-section) var(--space-xl);
+      text-align: center;
+      position: relative;
+    }
+
+    .contact-title {
+      font-size: clamp(40px, 6vw, 64px);
+      font-weight: 600;
+      letter-spacing: -2px;
+      line-height: 1.1;
+      margin-bottom: var(--space-lg);
+    }
+
+    .contact-desc {
+      font-size: 20px;
+      color: var(--linear-ink-muted);
+      max-width: 600px;
+      margin: 0 auto var(--space-2xl);
+      line-height: 1.6;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-lg);
+      flex-wrap: wrap;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      color: var(--linear-ink);
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 500;
+      padding: var(--space-md) var(--space-xl);
+      background: var(--linear-surface-1);
+      border: 1px solid var(--linear-hairline);
+      border-radius: var(--radius-md);
+      transition: all 0.2s ease;
+    }
+
+    .contact-link:hover {
+      background: var(--linear-surface-2);
+      border-color: var(--linear-primary);
+    }
+
+    .contact-link svg {
+      width: 20px;
+      height: 20px;
+      color: var(--linear-primary);
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--linear-surface-1);
+      border-top: 1px solid var(--linear-hairline);
+      padding: var(--space-2xl) var(--space-xl);
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-copyright {
+      font-size: 14px;
+      color: var(--linear-ink-subtle);
+    }
+
+    /* Mobile Menu */
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--linear-ink);
+      cursor: pointer;
+      padding: var(--space-sm);
+    }
+
+    .mobile-menu-btn svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .hero-title {
+        letter-spacing: -1.5px;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        gap: var(--space-lg);
+        text-align: center;
+      }
+    }
+
+    /* Scroll reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Gradient orb decoration */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .orb-1 {
+      width: 400px;
+      height: 400px;
+      background: var(--linear-primary);
+      top: 10%;
+      right: -10%;
+      opacity: 0.15;
+    }
+
+    .orb-2 {
+      width: 300px;
+      height: 300px;
+      background: var(--figma-lilac);
+      bottom: 20%;
+      left: -5%;
+      opacity: 0.1;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <a href="#" class="nav-logo">李鑫</a>
+    <ul class="nav-links">
+      <li><a href="#about">关于</a></li>
+      <li><a href="#experience">经历</a></li>
+      <li><a href="#works">作品</a></li>
+      <li><a href="#contact">联系</a></li>
+    </ul>
+    <button class="mobile-menu-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">高级产品设计师</div>
+      <h1 class="hero-title">李鑫</h1>
+      <p class="hero-subtitle">
+        8年电商设计经验，曾负责三只松鼠、360、孩子王等知名品牌视觉设计。工作认真负责，对设计有坚持，审美有高度，具备团队领导力。
+      </p>
+      <div class="hero-tags">
+        <span class="hero-tag">南京</span>
+        <span class="hero-tag">8年经验</span>
+        <span class="hero-tag">电商设计</span>
+        <span class="hero-tag">团队管理</span>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="hero-scroll-line"></div>
+      向下滚动
+    </div>
+  </section>
+
+  <!-- Marquee -->
+  <div class="marquee">
+    <div class="marquee-content">
+      <span class="marquee-item">电商视觉设计</span>
+      <span class="marquee-item">品牌视觉升级</span>
+      <span class="marquee-item">大促主视觉</span>
+      <span class="marquee-item">团队管理</span>
+      <span class="marquee-item">设计规范输出</span>
+      <span class="marquee-item">AIGC设计</span>
+      <span class="marquee-item">电商视觉设计</span>
+      <span class="marquee-item">品牌视觉升级</span>
+      <span class="marquee-item">大促主视觉</span>
+      <span class="marquee-item">团队管理</span>
+      <span class="marquee-item">设计规范输出</span>
+      <span class="marquee-item">AIGC设计</span>
+    </div>
+  </div>
+
+  <!-- About Section -->
+  <section id="about" class="section">
+    <div class="section-header reveal">
+      <div class="section-label">关于我</div>
+      <h2 class="section-title">用设计创造商业价值</h2>
+      <p class="section-desc">
+        毕业于南京传媒学院，深耕电商设计领域8年。从三只松鼠到360，再到孩子王，每一个项目都倾注匠心。
+      </p>
+    </div>
+  </section>
+
+  <!-- Color Block About -->
+  <section class="color-block-section reveal">
+    <div class="color-block color-block-lime">
+      <h2>用设计为品牌赋能</h2>
+      <p>相信好的设计不仅是视觉的呈现，更是商业价值的传递。每一处细节都值得被认真对待。</p>
+    </div>
+  </section>
+
+  <!-- Experience Section -->
+  <section id="experience" class="section">
+    <div class="section-header reveal">
+      <div class="section-label">工作经历</div>
+      <h2 class="section-title">深耕电商设计领域</h2>
+    </div>
+    <div class="experience-list">
+      <div class="experience-card reveal">
+        <div class="experience-header">
+          <span class="experience-company">孩子王</span>
+          <span class="experience-date">2024.9 - 至今</span>
+        </div>
+        <div class="experience-role">高级产品设计师</div>
+        <p class="experience-desc">商品详情页设计、档期活动（双11 / 自有品牌节）、输出设计规范</p>
+      </div>
+
+      <div class="experience-card reveal">
+        <div class="experience-header">
+          <span class="experience-company">360 车品旗舰店</span>
+          <span class="experience-date">2022.7 - 2024.8</span>
+        </div>
+        <div class="experience-role">旗舰店设计负责人</div>
+        <p class="experience-desc">负责车品旗舰店全店设计，提高推广图点击率，制定页面风格规范</p>
+      </div>
+
+      <div class="experience-card reveal">
+        <div class="experience-header">
+          <span class="experience-company">三只松鼠</span>
+          <span class="experience-date">2018.1 - 2022.6</span>
+        </div>
+        <div class="experience-role">设计组长</div>
+        <p class="experience-desc">大促节点首页banner设计，团队设计把控，2018双11全店销售额6.82亿</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Works Section -->
+  <section id="works" class="section">
+    <div class="section-header reveal">
+      <div class="section-label">代表作品</div>
+      <h2 class="section-title">打造令人印象深刻的设计</h2>
+      <p class="section-desc">从大促主视觉到品牌升级，每一个项目都是我倾注心血的成果。</p>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card reveal">
+        <div class="project-image">
+          <div class="project-image-icon">🎉</div>
+        </div>
+        <div class="project-content">
+          <div class="project-category">大促设计</div>
+          <h3 class="project-title">三只松鼠双11大促</h3>
+          <p class="project-desc">2018双11全店销售额6.82亿，大促主视觉设计，全链路视觉把控</p>
+          <div class="project-tech">
+            <span>主视觉</span>
+            <span>大促</span>
+            <span>电商</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-image">
+          <div class="project-image-icon">🚗</div>
+        </div>
+        <div class="project-content">
+          <div class="project-category">品牌升级</div>
+          <h3 class="project-title">360车品旗舰店</h3>
+          <p class="project-desc">全店视觉升级重构，提高推广图点击率，制定页面风格规范</p>
+          <div class="project-tech">
+            <span>品牌升级</span>
+            <span>视觉设计</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-image">
+          <div class="project-image-icon">🛒</div>
+        </div>
+        <div class="project-content">
+          <div class="project-category">详情页设计</div>
+          <h3 class="project-title">孩子王商品详情页</h3>
+          <p class="project-desc">商品详情页设计规范化输出，提升用户购物体验</p>
+          <div class="project-tech">
+            <span>详情页</span>
+            <span>设计规范</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-image">
+          <div class="project-image-icon">🎊</div>
+        </div>
+        <div class="project-content">
+          <div class="project-category">活动设计</div>
+          <h3 class="project-title">孩子王双11活动</h3>
+          <p class="project-desc">双11、自有品牌节等档期活动视觉设计</p>
+          <div class="project-tech">
+            <span>活动设计</span>
+            <span>档期</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Color Block CTA -->
+  <section class="color-block-section reveal">
+    <div class="color-block color-block-lilac">
+      <h2>准备好开启合作了吗？</h2>
+      <p>期待与您共同创造出色的设计作品。</p>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact-section">
+    <div class="reveal">
+      <h2 class="contact-title">联系我</h2>
+      <p class="contact-desc">
+        无论是工作机会还是项目合作，欢迎随时联系。
+      </p>
+      <div class="contact-links">
+        <a href="tel:18851739822" class="contact-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+          </svg>
+          188 5173 9822
+        </a>
+        <a href="mailto:497832698@qq.com" class="contact-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+          497832698@qq.com
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-copyright">© 2026 李鑫作品集</div>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Smooth scroll for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Navbar background on scroll
+    const nav = document.querySelector('.nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        nav.style.background = 'rgba(1, 1, 2, 0.95)';
+      } else {
+        nav.style.background = 'rgba(1, 1, 2, 0.8)';
+      }
+    });
+
+    // Parallax effect for orbs
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      const orbs = document.querySelectorAll('.orb');
+      orbs.forEach((orb, index) => {
+        const speed = 0.1 + (index * 0.05);
+        orb.style.transform = `translateY(${scrollY * speed}px)`;
+      });
+    });
+  </script>
+</body>
+</html>
