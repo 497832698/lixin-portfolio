@@ -67,21 +67,50 @@
       overflow-x: hidden;
     }
 
-    /* Navigation */
+    /* ===== RIPPLE EFFECT ===== */
+    .ripple-container {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(94, 106, 210, 0.4);
+      transform: scale(0);
+      animation: ripple-animation 0.6s ease-out;
+      pointer-events: none;
+    }
+
+    @keyframes ripple-animation {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    /* ===== NAVIGATION ===== */
     .nav {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      height: 64px;
+      height: 72px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 var(--space-xl);
-      background: rgba(1, 1, 2, 0.8);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--linear-hairline);
+      background: rgba(1, 1, 2, 0.7);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid transparent;
       z-index: 100;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .nav.scrolled {
+      height: 60px;
+      background: rgba(1, 1, 2, 0.92);
+      border-bottom-color: var(--linear-hairline);
     }
 
     .nav-logo {
@@ -90,6 +119,11 @@
       letter-spacing: -0.02em;
       color: var(--linear-ink);
       text-decoration: none;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-logo:hover {
+      transform: scale(1.05);
     }
 
     .nav-links {
@@ -103,32 +137,59 @@
       text-decoration: none;
       font-size: 14px;
       font-weight: 500;
-      transition: color 0.2s ease;
+      transition: all 0.3s ease;
+      position: relative;
+      padding: 8px 0;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--linear-primary);
+      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .nav-links a:hover {
       color: var(--linear-ink);
     }
 
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* ===== BUTTONS ===== */
     .btn {
       padding: 10px 18px;
       border-radius: var(--radius-md);
       font-size: 14px;
       font-weight: 500;
       text-decoration: none;
-      transition: all 0.2s ease;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
       border: none;
+      position: relative;
+      overflow: hidden;
     }
 
     .btn-primary {
       background: var(--linear-primary);
       color: #fff;
+      box-shadow: 0 4px 14px rgba(94, 106, 210, 0.3);
     }
 
     .btn-primary:hover {
       background: var(--linear-primary-hover);
       transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(94, 106, 210, 0.45);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0) scale(0.98);
+      box-shadow: 0 2px 8px rgba(94, 106, 210, 0.3);
     }
 
     /* Hero Section */
@@ -223,6 +284,21 @@
       padding: 8px 16px;
       border-radius: var(--radius-pill);
       border: 1px solid var(--linear-hairline);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-tag:hover {
+      background: var(--linear-surface-2);
+      border-color: var(--linear-primary);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(94, 106, 210, 0.3);
+    }
+
+    .hero-tag:active {
+      transform: translateY(-1px) scale(0.97);
     }
 
     .hero-scroll {
@@ -342,9 +418,10 @@
       border: 1px solid var(--linear-hairline);
       border-radius: var(--radius-lg);
       padding: var(--space-xl);
-      transition: all 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       overflow: hidden;
+      cursor: pointer;
     }
 
     .experience-card::before {
@@ -354,18 +431,24 @@
       left: 0;
       width: 4px;
       height: 100%;
-      background: var(--linear-primary);
-      opacity: 0;
-      transition: opacity 0.3s ease;
+      background: linear-gradient(180deg, var(--linear-primary), var(--figma-lilac));
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .experience-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--linear-surface-2);
+      transform: translateY(-6px) scale(1.01);
+      border-color: var(--linear-primary);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(94, 106, 210, 0.2);
     }
 
     .experience-card:hover::before {
-      opacity: 1;
+      transform: scaleY(1);
+    }
+
+    .experience-card:active {
+      transform: translateY(-2px) scale(0.99);
     }
 
     .experience-header {
@@ -417,15 +500,39 @@
       overflow: hidden;
       max-width: 1000px;
       margin: 0 auto;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .color-block:hover {
+      transform: scale(1.02) translateY(-4px);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .color-block:active {
+      transform: scale(0.99);
+    }
+
+    .color-block::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .color-block:hover::after {
+      opacity: 1;
     }
 
     .color-block-lime {
-      background: var(--figma-lime);
+      background: linear-gradient(135deg, var(--figma-lime), #c8e6a0);
       color: #1a1a1a;
     }
 
     .color-block-lilac {
-      background: var(--figma-lilac);
+      background: linear-gradient(135deg, var(--figma-lilac), #a890e8);
       color: #1a1a1a;
     }
 
@@ -435,12 +542,16 @@
       letter-spacing: -1px;
       line-height: 1.2;
       margin-bottom: var(--space-md);
+      position: relative;
+      z-index: 1;
     }
 
     .color-block p {
       font-size: 18px;
       line-height: 1.6;
       opacity: 0.8;
+      position: relative;
+      z-index: 1;
     }
 
     /* Project Cards */
@@ -457,13 +568,19 @@
       border: 1px solid var(--linear-hairline);
       border-radius: var(--radius-xl);
       overflow: hidden;
-      transition: all 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
+      cursor: pointer;
     }
 
     .project-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(94, 106, 210, 0.3);
+      border-color: transparent;
+    }
+
+    .project-card:active {
+      transform: translateY(-4px) scale(0.99);
     }
 
     .project-image {
@@ -474,6 +591,11 @@
       justify-content: center;
       position: relative;
       overflow: hidden;
+      transition: transform 0.4s ease;
+    }
+
+    .project-card:hover .project-image {
+      transform: scale(1.05);
     }
 
     .project-image::before {
@@ -481,8 +603,13 @@
       position: absolute;
       inset: 0;
       background: linear-gradient(135deg,
-        rgba(94, 106, 210, 0.1) 0%,
-        rgba(197, 176, 244, 0.1) 100%);
+        rgba(94, 106, 210, 0.15) 0%,
+        rgba(197, 176, 244, 0.15) 100%);
+      transition: opacity 0.3s ease;
+    }
+
+    .project-card:hover .project-image::before {
+      opacity: 1.5;
     }
 
     .project-image-icon {
@@ -581,18 +708,46 @@
       background: var(--linear-surface-1);
       border: 1px solid var(--linear-hairline);
       border-radius: var(--radius-md);
-      transition: all 0.2s ease;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(94, 106, 210, 0.2), transparent);
+      transition: left 0.5s ease;
     }
 
     .contact-link:hover {
       background: var(--linear-surface-2);
       border-color: var(--linear-primary);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .contact-link:hover::before {
+      left: 100%;
+    }
+
+    .contact-link:active {
+      transform: translateY(-2px) scale(0.98);
     }
 
     .contact-link svg {
       width: 20px;
       height: 20px;
       color: var(--linear-primary);
+      transition: transform 0.3s ease;
+    }
+
+    .contact-link:hover svg {
+      transform: scale(1.2);
     }
 
     /* Footer */
@@ -658,28 +813,35 @@
     /* Scroll reveal animation */
     .reveal {
       opacity: 0;
-      transform: translateY(40px);
+      transform: translateY(60px) scale(0.95);
       transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .reveal.visible {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
     }
 
-    /* Gradient orb decoration */
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* Gradient orb decoration with parallax */
     .orb {
       position: absolute;
       border-radius: 50%;
       filter: blur(80px);
       opacity: 0.5;
       pointer-events: none;
+      will-change: transform;
+      transition: transform 0.1s ease-out;
     }
 
     .orb-1 {
       width: 400px;
       height: 400px;
-      background: var(--linear-primary);
+      background: linear-gradient(135deg, var(--linear-primary), var(--figma-lilac));
       top: 10%;
       right: -10%;
       opacity: 0.15;
@@ -688,16 +850,72 @@
     .orb-2 {
       width: 300px;
       height: 300px;
-      background: var(--figma-lilac);
+      background: linear-gradient(135deg, var(--figma-lime), var(--linear-primary));
       bottom: 20%;
       left: -5%;
       opacity: 0.1;
     }
+
+    .orb-3 {
+      width: 200px;
+      height: 200px;
+      background: var(--figma-pink);
+      top: 50%;
+      left: 30%;
+      opacity: 0.08;
+    }
+
+    /* Parallax layers */
+    .parallax-section {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .parallax-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .parallax-float {
+      transition: transform 0.3s ease-out;
+    }
+
+    /* Scale reveal for cards */
+    .scale-reveal {
+      opacity: 0;
+      transform: scale(0.9) translateY(40px);
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .scale-reveal.visible {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+
+    /* Slide reveal for horizontal elements */
+    .slide-reveal-left {
+      opacity: 0;
+      transform: translateX(-60px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .slide-reveal-right {
+      opacity: 0;
+      transform: translateX(60px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .slide-reveal-left.visible,
+    .slide-reveal-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
   </style>
 </head>
-<body>
+<body class="ripple-container">
   <!-- Navigation -->
-  <nav class="nav">
+  <nav class="nav" id="nav">
     <a href="#" class="nav-logo">李鑫</a>
     <ul class="nav-links">
       <li><a href="#about">关于</a></li>
@@ -715,10 +933,13 @@
   </nav>
 
   <!-- Hero Section -->
-  <section class="hero">
+  <section class="hero parallax-section">
+    <div class="parallax-bg">
+      <div class="orb orb-1 parallax-float" data-speed="0.08"></div>
+      <div class="orb orb-2 parallax-float" data-speed="0.12"></div>
+      <div class="orb orb-3 parallax-float" data-speed="0.15"></div>
+    </div>
     <div class="hero-bg"></div>
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
     <div class="hero-content">
       <div class="hero-eyebrow">高级产品设计师</div>
       <h1 class="hero-title">李鑫</h1>
@@ -726,10 +947,10 @@
         8年电商设计经验，曾负责三只松鼠、360、孩子王等知名品牌视觉设计。工作认真负责，对设计有坚持，审美有高度，具备团队领导力。
       </p>
       <div class="hero-tags">
-        <span class="hero-tag">南京</span>
-        <span class="hero-tag">8年经验</span>
-        <span class="hero-tag">电商设计</span>
-        <span class="hero-tag">团队管理</span>
+        <span class="hero-tag ripple-effect">南京</span>
+        <span class="hero-tag ripple-effect">8年经验</span>
+        <span class="hero-tag ripple-effect">电商设计</span>
+        <span class="hero-tag ripple-effect">团队管理</span>
       </div>
     </div>
     <div class="hero-scroll">
@@ -769,7 +990,7 @@
 
   <!-- Color Block About -->
   <section class="color-block-section reveal">
-    <div class="color-block color-block-lime">
+    <div class="color-block color-block-lime ripple-effect">
       <h2>用设计为品牌赋能</h2>
       <p>相信好的设计不仅是视觉的呈现，更是商业价值的传递。每一处细节都值得被认真对待。</p>
     </div>
@@ -782,7 +1003,7 @@
       <h2 class="section-title">深耕电商设计领域</h2>
     </div>
     <div class="experience-list">
-      <div class="experience-card reveal">
+      <div class="experience-card ripple-effect reveal">
         <div class="experience-header">
           <span class="experience-company">孩子王</span>
           <span class="experience-date">2024.9 - 至今</span>
@@ -791,7 +1012,7 @@
         <p class="experience-desc">商品详情页设计、档期活动（双11 / 自有品牌节）、输出设计规范</p>
       </div>
 
-      <div class="experience-card reveal">
+      <div class="experience-card ripple-effect reveal reveal-delay-1">
         <div class="experience-header">
           <span class="experience-company">360 车品旗舰店</span>
           <span class="experience-date">2022.7 - 2024.8</span>
@@ -800,7 +1021,7 @@
         <p class="experience-desc">负责车品旗舰店全店设计，提高推广图点击率，制定页面风格规范</p>
       </div>
 
-      <div class="experience-card reveal">
+      <div class="experience-card ripple-effect reveal reveal-delay-2">
         <div class="experience-header">
           <span class="experience-company">三只松鼠</span>
           <span class="experience-date">2018.1 - 2022.6</span>
@@ -819,8 +1040,8 @@
       <p class="section-desc">从大促主视觉到品牌升级，每一个项目都是我倾注心血的成果。</p>
     </div>
     <div class="projects-grid">
-      <div class="project-card reveal">
-        <div class="project-image">
+      <div class="project-card ripple-effect reveal">
+        <div class="project-image parallax-float" data-speed="0.05">
           <div class="project-image-icon">🎉</div>
         </div>
         <div class="project-content">
@@ -828,15 +1049,15 @@
           <h3 class="project-title">三只松鼠双11大促</h3>
           <p class="project-desc">2018双11全店销售额6.82亿，大促主视觉设计，全链路视觉把控</p>
           <div class="project-tech">
-            <span>主视觉</span>
-            <span>大促</span>
-            <span>电商</span>
+            <span class="ripple-effect">主视觉</span>
+            <span class="ripple-effect">大促</span>
+            <span class="ripple-effect">电商</span>
           </div>
         </div>
       </div>
 
-      <div class="project-card reveal">
-        <div class="project-image">
+      <div class="project-card ripple-effect reveal reveal-delay-1">
+        <div class="project-image parallax-float" data-speed="0.08">
           <div class="project-image-icon">🚗</div>
         </div>
         <div class="project-content">
@@ -844,14 +1065,14 @@
           <h3 class="project-title">360车品旗舰店</h3>
           <p class="project-desc">全店视觉升级重构，提高推广图点击率，制定页面风格规范</p>
           <div class="project-tech">
-            <span>品牌升级</span>
-            <span>视觉设计</span>
+            <span class="ripple-effect">品牌升级</span>
+            <span class="ripple-effect">视觉设计</span>
           </div>
         </div>
       </div>
 
-      <div class="project-card reveal">
-        <div class="project-image">
+      <div class="project-card ripple-effect reveal reveal-delay-2">
+        <div class="project-image parallax-float" data-speed="0.06">
           <div class="project-image-icon">🛒</div>
         </div>
         <div class="project-content">
@@ -859,14 +1080,14 @@
           <h3 class="project-title">孩子王商品详情页</h3>
           <p class="project-desc">商品详情页设计规范化输出，提升用户购物体验</p>
           <div class="project-tech">
-            <span>详情页</span>
-            <span>设计规范</span>
+            <span class="ripple-effect">详情页</span>
+            <span class="ripple-effect">设计规范</span>
           </div>
         </div>
       </div>
 
-      <div class="project-card reveal">
-        <div class="project-image">
+      <div class="project-card ripple-effect reveal reveal-delay-3">
+        <div class="project-image parallax-float" data-speed="0.1">
           <div class="project-image-icon">🎊</div>
         </div>
         <div class="project-content">
@@ -874,8 +1095,8 @@
           <h3 class="project-title">孩子王双11活动</h3>
           <p class="project-desc">双11、自有品牌节等档期活动视觉设计</p>
           <div class="project-tech">
-            <span>活动设计</span>
-            <span>档期</span>
+            <span class="ripple-effect">活动设计</span>
+            <span class="ripple-effect">档期</span>
           </div>
         </div>
       </div>
@@ -884,7 +1105,7 @@
 
   <!-- Color Block CTA -->
   <section class="color-block-section reveal">
-    <div class="color-block color-block-lilac">
+    <div class="color-block color-block-lilac ripple-effect">
       <h2>准备好开启合作了吗？</h2>
       <p>期待与您共同创造出色的设计作品。</p>
     </div>
@@ -898,13 +1119,13 @@
         无论是工作机会还是项目合作，欢迎随时联系。
       </p>
       <div class="contact-links">
-        <a href="tel:18851739822" class="contact-link">
+        <a href="tel:18851739822" class="contact-link ripple-effect">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
           </svg>
           188 5173 9822
         </a>
-        <a href="mailto:497832698@qq.com" class="contact-link">
+        <a href="mailto:497832698@qq.com" class="contact-link ripple-effect">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
             <polyline points="22,6 12,13 2,6"/>
@@ -923,7 +1144,30 @@
   </footer>
 
   <script>
-    // Scroll reveal
+    // ===== RIPPLE EFFECT =====
+    document.addEventListener('click', function(e) {
+      const target = e.target.closest('.ripple-effect');
+      if (!target) return;
+
+      const rect = target.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const x = e.clientX - rect.left - size / 2;
+      const y = e.clientY - rect.top - size / 2;
+
+      const ripple = document.createElement('span');
+      ripple.className = 'ripple';
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = x + 'px';
+      ripple.style.top = y + 'px';
+
+      target.style.position = 'relative';
+      target.style.overflow = 'hidden';
+      target.appendChild(ripple);
+
+      setTimeout(() => ripple.remove(), 600);
+    });
+
+    // ===== SCROLL REVEAL WITH ELASTIC BOUNCE =====
     const observerOptions = {
       threshold: 0.1,
       rootMargin: '0px 0px -50px 0px'
@@ -941,37 +1185,106 @@
       observer.observe(el);
     });
 
-    // Smooth scroll for navigation
+    // ===== SMOOTH SCROLL WITH EASING =====
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
+          const startPosition = window.pageYOffset;
+          const targetPosition = target.getBoundingClientRect().top + startPosition;
+          const distance = targetPosition - startPosition;
+          const duration = 800;
+          let startTime = null;
+
+          function easeInOutCubic(t) {
+            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+          }
+
+          function animation(currentTime) {
+            if (startTime === null) startTime = currentTime;
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const ease = easeInOutCubic(progress);
+
+            window.scrollTo(0, startPosition + distance * ease);
+
+            if (progress < 1) {
+              requestAnimationFrame(animation);
+            }
+          }
+
+          requestAnimationFrame(animation);
         }
       });
     });
 
-    // Navbar background on scroll
-    const nav = document.querySelector('.nav');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 50) {
-        nav.style.background = 'rgba(1, 1, 2, 0.95)';
-      } else {
-        nav.style.background = 'rgba(1, 1, 2, 0.8)';
-      }
-    });
+    // ===== NAVBAR COMPACT ON SCROLL =====
+    const nav = document.getElementById('nav');
+    let lastScroll = 0;
 
-    // Parallax effect for orbs
     window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      const orbs = document.querySelectorAll('.orb');
-      orbs.forEach((orb, index) => {
-        const speed = 0.1 + (index * 0.05);
-        orb.style.transform = `translateY(${scrollY * speed}px)`;
+      const currentScroll = window.pageYOffset;
+
+      if (currentScroll > 80) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+
+      lastScroll = currentScroll;
+    }, { passive: true });
+
+    // ===== PARALLAX EFFECT =====
+    const parallaxElements = document.querySelectorAll('.parallax-float');
+    let ticking = false;
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrollY = window.pageYOffset;
+
+          parallaxElements.forEach(el => {
+            const speed = parseFloat(el.dataset.speed) || 0.05;
+            const rect = el.parentElement.getBoundingClientRect();
+            const relativeScroll = scrollY - el.parentElement.offsetTop;
+            const translateY = relativeScroll * speed;
+
+            // Only animate if in viewport
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+              el.style.transform = `translateY(${translateY}px)`;
+            }
+          });
+
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    // ===== ENHANCED CARD INTERACTIONS =====
+    document.querySelectorAll('.project-card, .experience-card, .color-block').forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        this.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+      });
+
+      card.addEventListener('mousemove', function(e) {
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = (y - centerY) / 20;
+        const rotateY = (centerX - x) / 20;
+
+        this.style.transform = `translateY(-10px) scale(1.02) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        this.style.boxShadow = `${(centerX - x) / 10}px ${(centerY - y) / 10}px 30px rgba(0, 0, 0, 0.4)`;
+      });
+
+      card.addEventListener('mouseleave', function() {
+        this.style.transform = '';
+        this.style.boxShadow = '';
       });
     });
   </script>
