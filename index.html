@@ -70,7 +70,6 @@
     /* ===== RIPPLE EFFECT ===== */
     .ripple-container {
       position: relative;
-      overflow: hidden;
     }
 
     .ripple {
@@ -200,7 +199,6 @@
       justify-content: center;
       padding: var(--space-section) var(--space-xl);
       position: relative;
-      overflow: hidden;
     }
 
     .hero-bg {
@@ -287,7 +285,6 @@
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
       position: relative;
-      overflow: hidden;
     }
 
     .hero-tag:hover {
@@ -497,7 +494,6 @@
       border-radius: var(--radius-lg);
       padding: var(--space-2xl);
       position: relative;
-      overflow: hidden;
       max-width: 1000px;
       margin: 0 auto;
       cursor: pointer;
@@ -567,7 +563,6 @@
       background: var(--linear-surface-1);
       border: 1px solid var(--linear-hairline);
       border-radius: var(--radius-xl);
-      overflow: hidden;
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       cursor: pointer;
@@ -590,7 +585,6 @@
       align-items: center;
       justify-content: center;
       position: relative;
-      overflow: hidden;
       transition: transform 0.4s ease;
     }
 
@@ -710,18 +704,18 @@
       border-radius: var(--radius-md);
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
-      overflow: hidden;
     }
 
     .contact-link::before {
       content: '';
       position: absolute;
-      top: 0;
+      top: 50%;
       left: -100%;
-      width: 100%;
-      height: 100%;
+      width: 200%;
+      height: 200%;
       background: linear-gradient(90deg, transparent, rgba(94, 106, 210, 0.2), transparent);
       transition: left 0.5s ease;
+      transform: translateY(-50%);
     }
 
     .contact-link:hover {
@@ -868,7 +862,6 @@
     /* Parallax layers */
     .parallax-section {
       position: relative;
-      overflow: hidden;
     }
 
     .parallax-bg {
